@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> FCFS </title>
+  <script type="text/javascript" src="/js/index.js"></script>
+  <link rel="stylesheet" href="/css/index.css"></link>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+</head>
+<body>
+    <h1> FCFS Scheduling </h1>
+    <div id="showinput"></div>
+    <div id="inputsection" class="card" style="width:100%;float:left;">
+        <div style="width: 300px; float:left;text-align:left; margin-left: 20px;">
+            Arrival Time:
+            <input style="width:50px;" id="newat" class="form-control" type="text" value=""></input>
+        </div>
+        <div style="width: 300px;float:left;text-align:left;">
+            Burst Time:
+            <input style="width:50px;" id="newbt" class="form-control" type="text" value=""></input>
+        </div>
+        <button class="btn btn-success" onclick="addToList()" style="float:left;margin-left:10px;">Add</button>
+    </div>
+    <br>
+    <button class="btn btn-success" onclick="showOutput()" style="float:right; margin-right: 50px;">Schedule</button>
+    <br>
+    <br />
+    <br />
+    <br />
+    <div>
+        <h2 style="text-align:center;"> Gantt Chart</h2>
+        <br />
+        <div id="gantt"></div>
+        <br /><br />
+        <div>
+            <div style="width: 50%; text-align:center;float:left; font-size: 20px;" id="awt1">
+            </div>
+            <div style="width:50%; text-align:center;float:left;font-size:20px;" id="atat1">
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <h3 style="text-align:center;">Operations taken place in CPU</h3>
+        <div id="operations"></div>
+    </div>
+    <br /><br />
+    <div>
+        <h2 style="text-align:center;">Output Table</h2>
+        <div>
+            <table id="tab" class="table bordered centered responsive-table" style="border-color: black; border-width: 2px; align: center; bgcolor: white; cellspacing: 10px;">
+                <thead>
+                    <tr id="thead">
+                        <th>Process ID</th>
+                        <th>Arrival Time</th>
+                        <th>Burst Time</th>
+                        <th>Completion Time</th>
+                        <th>Waiting Time</th>
+                        <th>Turnaround Time</th>
+                    </tr>
+                </thead>
+                <tbody id="ptable">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
