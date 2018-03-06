@@ -7,19 +7,26 @@ body > div > ul {
     margin: 0;
 }
 
-    body > div > ul > li {
-        width: 100%;
-        padding: 10px;
-        font-size: 30px;
-        cursor: pointer;
-        text-align: center;
-        border-style: solid;
-        font-family: 'Monotype Cursiva', cursive;
-    }
+body > div > ul > li {
+    width: 100%;
+    padding: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    text-align: center;
+    border-style: solid;
+    font-family: 'Monotype Cursiva', cursive;
+}
+
 #gantt{
-    width: 800px;
+    width: 801px;
     height: 100px;
     position: relative;
     margin: auto;
     border: .5px solid black;
+}
+
+#timer{
+    width: 805px;
+    position:relative;
+    margin: auto;
 }
