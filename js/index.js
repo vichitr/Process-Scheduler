@@ -6,6 +6,8 @@ var colors = ["#e040fb", "#ff80ab", "#3f51b5", "#1e88e5", "#009688", "#4caf50", 
 var atat = 0.0;
 var awt = 0.0;
 var pixel = 0;
+var t = 0;
+
 function addToList() {   
     var at = document.getElementById("newat").value;
     var bt = document.getElementById("newbt").value;
@@ -89,7 +91,6 @@ function fcfs() {
     p.sort(function (a, b) {
         return a.at - b.at;
     });
-    var t = 0;
     for (var i = 0; i < p.length; i++) {
         if (p[i].at <= t) {
             var newdiv = document.createElement("div");
@@ -152,16 +153,13 @@ function fcfs() {
 
 function showOutput() {
     var awt2 = document.getElementById("awt1");
-    awt2.innerHTML = "";
     var atat2 = document.getElementById("atat1");
+    awt2.innerHTML = "";
     atat2.innerHTML = "";
     fcfs();
     var p1 = document.createElement("p");
     p1.textContent = "Average waiting time: " + awt;
     awt2.appendChild(p1);
-    //awt2.appendChild("<p> " + awt + "</p>");
-    //$("#awt1").append("  " + awt + "  ");
-    //$("#atat1").append("  " + atat + "  ");
     var p2 = document.createElement("p");
     p2.textContent = "Average turn around time: " + atat;
     atat2.appendChild(p2);
@@ -171,21 +169,79 @@ function showOutput() {
 
 function drawChart() {
     var gt = document.getElementById("gantt");
-    var l = gantt.length;
-    pixel = parseInt(800 / (gantt[l - 1].end));
+    var timer1 = document.getElementById("timer");
+    pixel = parseInt(800 / t);
     for (var i = 0; i < gantt.length; i++) {
         var divWidth = (gantt[i].end - gantt[i].start) * pixel;
         var d = document.createElement("div");
+        d.setAttribute("class", "block");
         var id1 = gantt[i].id;
         d.setAttribute("id", "P-" + gantt[i].id);
-        d.setAttribute("style", "float:left;width:" + divWidth+"; height:auto;");
+        //window.alert("Width is " + divWidth);
+        
         if (gantt[i].id == -1) {
             d.textContent = "";
+            d.setAttribute("style", "float:left;width:" + divWidth + "px; height:100px;");
         }
         else {
-            d.setAttribute("style", "background-color:"+colors[id1 - 1]+";");
+            d.setAttribute("style", "float:left;width: "+divWidth+"px; height: 100px;background-color:"+colors[id1 - 1]+";font-size:40px;text-align:center;");
             d.textContent = "P-" + gantt[i].id;
         }
         gt.appendChild(d); 
+        var d1 = document.createElement("div");
+        d1.setAttribute("style", "float:left;width:" + divWidth + "px;");
+        d1.textContent = gantt[i].start;
+        timer1.appendChild(d1);
     }
+    var d1 = document.createElement("div");
+    d1.setAttribute("style", "float:left;width:3px;");
+    d1.textContent = gantt[i-1].end;
+    timer1.appendChild(d1);
+}
+
+function drawTable() {
+    var table = document.getElementById("ptable");
+    p.sort(function (a, b) {
+        return a.ct - b.ct;
+    });
+    for (var i = 0; i < p.length; i++) {
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        td1.textContent = p[i].id;
+        var td2 = document.createElement("td");
+        td2.textContent = p[i].at;
+        var td3 = document.createElement("td");
+        td3.textContent = p[i].bt;
+        var td4 = document.createElement("td");
+        td4.textContent = p[i].ct;
+        var td5 = document.createElement("td");
+        td5.textContent = p[i].wt;
+        var td6 = document.createElement("td");
+        td6.textContent = p[i].tat;
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tr.appendChild(td5);
+        tr.appendChild(td6);
+        table.appendChild(tr);
+    }
+}
+
+function clearData() {
+    var table = document.getElementById("ptable");
+    var gt = document.getElementById("gantt");
+    var awt2 = document.getElementById("awt1");
+    var atat2 = document.getElementById("atat1");
+    var operation = document.getElementById("operations");
+    var inp = document.getElementById("showinput");
+    inp.innerHTML = "";
+    inp.setAttribute("style","height:30px;")
+    operation.innerHTML = "";
+    awt2.innerHTML = "";
+    atat2.innerHTML = "";
+    table.innerHTML = "";
+    gt.innerHTML = "";
+    var timer1 = document.getElementById("timer");
+    timer1.innerHTML = "";
 }
