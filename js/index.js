@@ -11,6 +11,10 @@ var t = 0;
 function addToList() {   
     var at = document.getElementById("newat").value;
     var bt = document.getElementById("newbt").value;
+    if (isNaN(parseInt(at)) || isNaN(parseInt(bt))) {
+        window.alert("Please enter valid inputs");
+        return;
+    }
     p.push({
         "at": parseInt(at),
         "bt": parseInt(bt),
