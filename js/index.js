@@ -15,6 +15,14 @@ function addToList() {
         window.alert("Please enter valid inputs");
         return;
     }
+    if (isNaN(parseInt(at))) {
+        window.alert("Please enter numeric value of arrival time");
+        return;
+    }
+    if (isNaN(parseInt(bt))) {
+        window.alert("Please enter numeric value of burst time");
+        return;
+    }
     p.push({
         "at": parseInt(at),
         "bt": parseInt(bt),
