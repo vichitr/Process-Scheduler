@@ -256,4 +256,6 @@ function clearData() {
     gt.innerHTML = "";
     var timer1 = document.getElementById("timer");
     timer1.innerHTML = "";
+    p=[];
+    gantt = [];
 }
