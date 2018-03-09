@@ -103,6 +103,8 @@ function fcfs() {
     p.sort(function (a, b) {
         return a.at - b.at;
     });
+    gantt = [];
+    t = 0;
     for (var i = 0; i < p.length; i++) {
         if (p[i].at <= t) {
             var newdiv = document.createElement("div");
@@ -164,10 +166,20 @@ function fcfs() {
 }
 
 function showOutput() {
+    if (p.length == 0) {
+        window.alert("No process to schedule");
+        return;
+    }
     var awt2 = document.getElementById("awt1");
     var atat2 = document.getElementById("atat1");
     awt2.innerHTML = "";
     atat2.innerHTML = "";
+    var gt = document.getElementById("gantt");
+    gt.innerHTML = "";
+    var table = document.getElementById("ptable");
+    table.innerHTML = "";
+    var timer1 = document.getElementById("timer");
+    timer1.innerHTML = "";
     fcfs();
     var p1 = document.createElement("p");
     p1.textContent = "Average waiting time: " + awt;
@@ -248,7 +260,7 @@ function clearData() {
     var operation = document.getElementById("operations");
     var inp = document.getElementById("showinput");
     inp.innerHTML = "";
-    inp.setAttribute("style","height:30px;")
+    inp.setAttribute("style","height:auto;")
     operation.innerHTML = "";
     awt2.innerHTML = "";
     atat2.innerHTML = "";
@@ -256,6 +268,6 @@ function clearData() {
     gt.innerHTML = "";
     var timer1 = document.getElementById("timer");
     timer1.innerHTML = "";
-    p=[];
+    p = [];
     gantt = [];
 }
