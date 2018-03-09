@@ -1,7 +1,6 @@
 var p = [];
 var index = 1;
 var gantt = [];
-var result = [];
 var colors = ["#e040fb", "#ff80ab", "#3f51b5", "#1e88e5", "#009688", "#4caf50", "#cddc39", "#ffeb3b", "#607d8b", "#ff9800"];
 var atat = 0.0;
 var awt = 0.0;
