@@ -546,6 +546,9 @@ function clearData() {
     thead.innerHTML = "";
     p = [];
     gantt = [];
+    index = 1;
+    atat = 0.0;
+    awt = 0.0;
     t = 0;
     if (flg == 3) {
         var tq1 = document.getElementById("tq");
