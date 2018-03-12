@@ -17,14 +17,6 @@ body > div > ul > li {
     font-family: 'Monotype Cursiva', cursive;
 }
 
-#gantt{
-    width: 801px;
-    height: 100px;
-    position: relative;
-    margin: auto;
-    border: .5px solid black;
-}
-
 #timer{
     width: 805px;
     position:relative;
