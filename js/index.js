@@ -293,6 +293,14 @@ function sjf() {
             done = 1;
         }
     }
+    var total_tat = 0.0, total_wt = 0.0;
+    for (var i = 0; i < p.length; i++) {
+        total_tat += p[i].tat;
+        total_wt += p[i].wt;
+    }
+    atat = (total_tat / p.length).toFixed(2);
+    awt = (total_wt / p.length).toFixed(2);
+    return;
 }
 
 function rr() {
