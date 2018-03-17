@@ -260,7 +260,7 @@ function sjf() {
             if (x > 0) {
                 var newdiv = document.createElement("div");
                 newdiv.setAttribute("style", "margin-left: 500px; width:100%; font-size: 20px;");
-                newdiv.textContent = "t = " + t - x + ": CPU is idle.";
+                newdiv.textContent = "t = " + (t - x) + ": CPU is idle.";
                 operation.appendChild(br);
                 operation.appendChild(newdiv);
                 operation.appendChild(br);
