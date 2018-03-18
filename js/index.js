@@ -114,21 +114,20 @@ function srtf() {
     var operation = document.getElementById("operations");
     operation.innerHTML = "";
     var br = document.createElement("br");
-    //$("#operations").append("<p> hi</p>");
     p.sort(function (a, b) {
         return a.at - b.at;
     });
     gantt = [];
     t = 0;
+    var tgantt = [];
     var done = 0;
     var count = 0;
-    var x = 0;
     var k = -1;
     var min;
-    var prev = k;
-    var y = 0;
-    var f = 0;
+    var prev;
+    //execute all processes
     while (done != 1) {
+        //find process with min rt
         k = -1;
         min = 9999;
         for (var i = 0; i < p.length; i++) {
@@ -137,85 +136,49 @@ function srtf() {
                 min = p[i].rt;
             }
         }
-        t += 1;
-        if (k != -1)
-            p[k].rt -= 1;
- 
-        if ( k == -1) {
-            y += 1;
-        }
-        else if (k == prev) {
-            x += 1;
-        }
-        else {
-            if (y > 0) {
-                var newdiv = document.createElement("div");
-                newdiv.setAttribute("style", "margin-left: 500px; width:100%; font-size: 20px;");
-                newdiv.textContent = "t = " + (t - y-1) + ": CPU is idle.";
-                operation.appendChild(br);
-                operation.appendChild(newdiv);
-                operation.appendChild(br);
-                gantt.push({
-                    "id": -1,
-                    "start": t - y-1,
-                    "end": t-1
-                });
-                y = 0;
-            }
-            else {
-                if (f == 0) {
-                    f = 1;
-                }
-                else {
-                    var newdiv = document.createElement("div");
-                    newdiv.setAttribute("style", "margin-left: 500px; width:100%; font-size: 20px;");
-                    newdiv.textContent = "t = " + (t - x) + ": Process-" + p[prev].id + " entered CPU and being executed";
-                    operation.appendChild(br);
-                    operation.appendChild(newdiv);
-                    operation.appendChild(br);
-                    gantt.push({
-                        "id": p[prev].id,
-                        "start": t - x,
-                        "end": t
-                    });
-                    x = 0;
-                    if (p[prev].rt == 0) {
-                        count += 1;
-                        p[prev].valid = 1;
-                        p[prev].ct = t;
-                        p[prev].tat = t - p[prev].at;
-                        p[prev].wt = p[prev].tat - p[prev].bt;
-                    }
-                }
-            }   
-        }
-        if (k!= -1 && count == p.length - 1) {
+        // perform checks
+        if (k != prev) {
             var newdiv = document.createElement("div");
             newdiv.setAttribute("style", "margin-left: 500px; width:100%; font-size: 20px;");
-            newdiv.textContent = "t = " + (t - 1) + ": Process-" + p[k].id + " entered CPU and being executed";
+            if (k == -1) {
+                newdiv.textContent = "t = " + t + ": CPU is idle.";
+            }
+            else {
+                newdiv.textContent = "t = " + t + ": Process-" + p[k].id + " entered CPU and being executed";
+            }
             operation.appendChild(br);
             operation.appendChild(newdiv);
             operation.appendChild(br);
-            gantt.push({
-                "id": p[k].id,
-                "start": t - 1,
-                "end": t + p[k].rt
-            });
-            t += p[k].rt;
-            p[k].valid = 1;
-            p[k].ct = t;
-            p[k].tat = t - p[k].at;
-            p[k].wt = p[k].tat - p[k].bt;
-            
-            done = 1;
         }
         prev = k;
+        if (k != -1) {
+            p[k].rt -= 1;
+            if (p[k].rt == 0) {
+                p[k].valid = 1;
+                p[k].ct = t + 1;
+                p[k].tat = t + 1 - p[k].at;
+                p[k].wt = p[k].tat - p[k].bt;
+                count += 1;
+            }
+            if (count == p.length) {
+                done = 1;
+            }
+            tgantt.push({
+                "id": p[k].id,
+                "start": t,
+                "end": t + 1
+            });
+        }
+        else {
+            tgantt.push({
+                "id": -1,
+                "start": t,
+                "end": t + 1
+            });
+        }
+        t += 1;
     }
-    for (var i = 0; i < gantt.length; i++) {
-        var p1 = document.createElement("p");
-        p1.textContent = i + "id: " + gantt[i].id + " start: " + gantt[i].start + " end: " + gantt[i].end;
-        operations.appendChild(p1);
-    }
+    //find awt & atat
     var total_tat = 0.0, total_wt = 0.0;
     for (var i = 0; i < p.length; i++) {
         total_tat += p[i].tat;
@@ -223,15 +186,37 @@ function srtf() {
     }
     atat = (total_tat / p.length).toFixed(2);
     awt = (total_wt / p.length).toFixed(2);
-    t = 0;
-    return;
+    //get gantt chart from temporary chart tgantt[]
+    var pre = tgantt[0].id;
+    var begin = tgantt[0].start;
+    var stop;
+    for (var i = 1; i < tgantt.length; i++) {
+        if (tgantt[i].id == pre) {
+            continue;
+        }
+        else {
+            pre = tgantt[i].id;
+            stop = tgantt[i - 1].end;
+            gantt.push({
+                "id": tgantt[i - 1].id,
+                "start": begin,
+                "end": stop
+            });
+            begin = tgantt[i].start;
+        }
+    }
+    stop = tgantt[i - 1].end;
+    gantt.push({
+        "id": tgantt[i - 1].id,
+        "start": begin,
+        "end": stop
+    });
 }
 
 function sjf() {
     var operation = document.getElementById("operations");
     operation.innerHTML = "";
     var br = document.createElement("br");
-    //$("#operations").append("<p> hi</p>");
     p.sort(function (a, b) {
         return a.at - b.at;
     });
@@ -242,7 +227,6 @@ function sjf() {
     var k = -1;
     var min;
     while (done != 1) {
-       // k = 0;
         k = -1;
         min = 9999;
         for (var i = 0; i < p.length; i++) {
@@ -254,7 +238,6 @@ function sjf() {
         if (k == -1) {
             x += 1;
             t += 1;
-            //continue;
         }
         else {
             if (x > 0) {
@@ -264,9 +247,10 @@ function sjf() {
                 operation.appendChild(br);
                 operation.appendChild(newdiv);
                 operation.appendChild(br);
+                var tx = t - x;
                 gantt.push({
                     "id": -1,
-                    "start": t - x,
+                    "start": tx,
                     "end": t
                 });
                 x = 0;
@@ -277,10 +261,11 @@ function sjf() {
             operation.appendChild(br);
             operation.appendChild(newdiv);
             operation.appendChild(br);
+            var tb = t + p[k].bt;
             gantt.push({
                 "id": p[k].id,
                 "start": t,
-                "end": t + p[k].bt
+                "end": tb
             });
             t = t + p[k].bt;
             p[k].ct = t;
@@ -307,12 +292,11 @@ function rr() {
     var operation = document.getElementById("operations");
     operation.innerHTML = "";
     var br = document.createElement("br");
-    //$("#operations").append("<p> hi</p>");
     p.sort(function (a, b) {
         return a.at - b.at;
     });
     gantt = [];
-    t = 0;
+    //t = 0;
 
 }
 
@@ -320,7 +304,6 @@ function fcfs() {
     var operation = document.getElementById("operations");
     operation.innerHTML = "";
     var br = document.createElement("br");
-    //$("#operations").append("<p> hi</p>");
     p.sort(function (a, b) {
         return a.at - b.at;
     });
@@ -391,6 +374,10 @@ function showOutput(flag) {
     if (p.length == 0) {
         alert("No process to schedule");
         return;
+    }
+    for (var i = 0; i < p.length; i++) {
+        p[i].rt = p[i].bt;
+        p[i].valid = 0;
     }
     if (flag == 0) {
         fcfs();
@@ -464,6 +451,7 @@ function showOutput(flag) {
     atat2.appendChild(p2);
     drawChart();
     drawTable();
+    t = 0;
 }
 
 function drawChart() {
@@ -476,7 +464,6 @@ function drawChart() {
         d.setAttribute("class", "block");
         var id1 = gantt[i].id;
         d.setAttribute("id", "P-" + gantt[i].id);
-        //window.alert("Width is " + divWidth);
         
         if (gantt[i].id == -1) {
             d.textContent = "";
@@ -553,10 +540,8 @@ function clearData() {
     var thead = document.getElementById("thead");
     thead.innerHTML = "";
     p = [];
-    gantt = [];
     index = 1;
-    atat = 0.0;
-    awt = 0.0;
+    gantt = [];
     t = 0;
     if (flg == 3) {
         var tq1 = document.getElementById("tq");
