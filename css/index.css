@@ -22,3 +22,7 @@ body > div > ul > li {
     position:relative;
     margin: auto;
 }
+
+#gantt{
+    background-color:white;
+}
