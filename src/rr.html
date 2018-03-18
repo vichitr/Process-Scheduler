@@ -6,12 +6,12 @@
     <link rel="stylesheet" type="text/css" href="../css/index.css"></link>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
 </head>
-<body style="background-color:#68164C;">
+<body style="background-color:#931F6C;">
     <h1 style="text-align:center;"> Round Robin Scheduling </h1>
     <br />
     <br />
     <div id="showinput"></div>
-    <div id="inputsection" class="card" style="width:100%;float:left;">
+    <div id="inputsection" class="card" style="width:100%;float:left;background-color:#931F6C;">
         <div style="width: 300px; float:left;text-align:left; margin-left: 20px;">
             Arrival Time:
             <input style="width:50px;" id="newat" class="form-control" type="text" value=""></input>
@@ -23,7 +23,7 @@
         <button class="btn btn-success" onclick="addToList()" style="float:left;margin-left:10px;">Add</button>
     </div>
     <br>
-    <div style="width:800px;margin-left:20px;">
+    <div style="height: 20px; width:300px;margin-left:20px;">
         Time Quantum:
         <input style="width:50px;margin-left:30px;" id="tq" type="text" value=""></input>
     </div>
@@ -56,7 +56,7 @@
     </div>
     <br /><br />
     <div>
-        <h2 id="table-heading" style="text-align:center;"></h2>
+        <h3 id="table-heading" style="text-align:center;"></h3>
         <div>
             <table id="tab" class="table bordered centered responsive-table" style="border-color: black; border-width: 2px; align: center; bgcolor: white; cellspacing: 10px;">
                 <thead id="thead">
