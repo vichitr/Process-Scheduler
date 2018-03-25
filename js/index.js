@@ -1,7 +1,6 @@
 var p = [];
 var index = 1;
 var gantt = [];
-var result = [];
 var colors = ["#e040fb", "#ff80ab", "#3f51b5", "#1e88e5", "#009688", "#4caf50", "#cddc39", "#ffeb3b", "#607d8b", "#ff9800"];
 var atat = 0.0;
 var awt = 0.0;
@@ -105,8 +104,34 @@ function edit(id) {
 }
 
 function save(pos) {
-    p[pos].at = parseInt(document.getElementById("at" + pos).value);
-    p[pos].bt = parseInt(document.getElementById("bt" + pos).value);
+    at = parseInt(document.getElementById("at" + pos).value);
+    bt = parseInt(document.getElementById("bt" + pos).value);
+    if (isNaN(parseInt(at)) && isNaN(parseInt(bt))) {
+        window.alert("Please enter valid inputs");
+        return;
+    }
+    if (isNaN(parseInt(at))) {
+        window.alert("Please enter numeric value of arrival time");
+        return;
+    }
+    if (isNaN(parseInt(bt))) {
+        window.alert("Please enter numeric value of burst time");
+        return;
+    }
+    if (parseInt(at) < 0 && parseInt(bt) <= 0) {
+        window.alert("Invalid inputs");
+        return;
+    }
+    if (parseInt(at) < 0) {
+        window.alert("Please enter valid value of arrival time");
+        return;
+    }
+    if (parseInt(bt) <= 0) {
+        window.alert("Please enter positive value of burst time");
+        return;
+    }
+    p[pos].at = at;
+    p[pos].bt = bt;
     displayList();
 }
 
