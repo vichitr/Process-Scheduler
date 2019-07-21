@@ -9,3 +9,5 @@ Algorithms implemented are -
 3. Round Robin Scheduling (RR)
 4. Shortest Remaining Time First (SRTF)
 5. Priority Scheduling - Preemptive & Non-Preemptive 
+
+- All algorithms are implemented in JavaScript.
